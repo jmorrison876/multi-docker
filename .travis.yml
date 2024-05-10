@@ -15,7 +15,7 @@ after_success:
   - docker build -t jayboo876/multi-nginx ./nginx
   - docker build -t jayboo876/multi-worker ./worker
   # Login to Docker
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Push images to Docker Hub
   - docker push jayboo876/multi-client
   - docker push jayboo876/multi-server
