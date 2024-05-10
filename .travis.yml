@@ -8,8 +8,16 @@ before_install:
 script:
   - docker run -e CI=true jayboo876/react-test npm test
 
+# Build Containers if tests are successful
 after_success:
   - docker build -t jayboo876/multi-client ./client
   - docker build -t jayboo876/multi-server ./server
   - docker build -t jayboo876/multi-nginx ./nginx
   - docker build -t jayboo876/multi-worker ./worker
+  # Login to Docker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID"
+  # Push images to Docker Hub
+  - docker push jayboo876/multi-client
+  - docker push jayboo876/multi-server
+  - docker push jayboo876/multi-nginx
+  - docker push jayboo876/multi-worker
